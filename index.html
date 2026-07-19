@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>곽명희 VOCA</title>
 <meta property="og:title" content="곽명희 VOCA">
-<meta property="og:description" content="구하민 · 구아린 — 플래시카드·퀴즈·받아쓰기로 매일 영어 단어 학습">
+<meta property="og:description" content="구하민 · 구아린 — 플래시카드·짝 맞추기·OX 퀴즈·풍선 팡으로 매일 신나는 영어 단어 학습">
 <meta property="og:type" content="website">
-<meta name="description" content="구하민 · 구아린 — 플래시카드·퀴즈·받아쓰기로 매일 영어 단어 학습">
+<meta name="description" content="구하민 · 구아린 — 플래시카드·짝 맞추기·OX 퀴즈·풍선 팡으로 매일 신나는 영어 단어 학습">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -130,11 +130,72 @@ main{padding:4px 18px calc(var(--nav-h) + 26px)}
 .mode-btn span{font-size:.75rem;font-weight:600;color:var(--sub)}
 .mode-btn.wide{grid-column:1/-1;display:flex;align-items:center;gap:12px}
 .mode-btn.wide .mi{margin:0}
+[data-mode="flash"] .mi{background:var(--blue-soft)}
 [data-mode="pics"] .mi{background:var(--purple-soft)}
 [data-mode="quiz"] .mi{background:var(--accent-soft)}
-[data-mode="spell"] .mi{background:var(--blue-soft)}
-[data-mode="listen"] .mi{background:var(--orange-soft)}
+[data-mode="match"] .mi{background:var(--orange-soft)}
+[data-mode="ox"] .mi{background:var(--gold-soft)}
+[data-mode="balloon"] .mi{background:var(--bad-soft)}
+[data-mode="spell"] .mi{background:var(--good-soft)}
 [data-mode="wrong"] .mi{background:var(--bad-soft)}
+
+/* 스펠링 글자칸 */
+.sp-slots{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin:14px 0 4px}
+.sp-slot{width:30px;height:38px;border-bottom:3px solid var(--line);display:flex;align-items:center;
+  justify-content:center;font-weight:800;font-size:1.15rem;font-family:'Jua',sans-serif;color:var(--ink)}
+.sp-slot.fill{border-color:var(--blue)}
+.sp-slot.gap{width:14px;border:none}
+
+/* 짝 맞추기 */
+.mg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:520px;margin:14px auto 0}
+.mg-card{min-height:86px;border:2px solid var(--line);border-radius:16px;background:var(--card);
+  font-weight:800;font-size:.92rem;line-height:1.3;padding:8px 6px;word-break:keep-all;
+  display:flex;align-items:center;justify-content:center;text-align:center;cursor:pointer;
+  transition:transform .15s,background .15s;color:var(--ink)}
+.mg-card.back{background:var(--blue-soft);font-size:1.5rem}
+.mg-card.done{background:var(--good-soft);border-color:var(--good);color:var(--accent-deep);
+  transform:scale(.96);pointer-events:none}
+.mg-card.no{background:var(--bad-soft);border-color:var(--bad)}
+.mg-card:active{transform:scale(.95)}
+/* OX 퀴즈 */
+.ox-pair{max-width:460px;margin:16px auto 0;text-align:center}
+.ox-word{font-family:'Jua',sans-serif;font-size:2rem;margin-bottom:6px}
+.ox-mean{font-size:1.2rem;font-weight:800;background:var(--gold-soft);border-radius:16px;
+  padding:14px 16px;margin:12px 0 4px;word-break:keep-all}
+.ox-btns{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:420px;margin:20px auto 0}
+.ox-btn{font-size:2.6rem;padding:22px 0;border-radius:22px;border:2px solid var(--line);
+  background:var(--card);cursor:pointer;transition:transform .12s}
+.ox-btn:active{transform:scale(.94)}
+.ox-btn.o{color:var(--blue)}.ox-btn.x{color:var(--bad)}
+.ox-btn.correct{background:var(--good-soft);border-color:var(--good)}
+.ox-btn.wrongpick{background:var(--bad-soft);border-color:var(--bad)}
+/* 풍선 팡 */
+.bl-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:440px;margin:18px auto 0}
+.bl{position:relative;aspect-ratio:1/1.08;border-radius:50% 50% 50% 50%/46% 46% 54% 54%;
+  border:none;cursor:pointer;color:#fff;font-weight:800;font-size:.88rem;line-height:1.3;
+  padding:12px;word-break:keep-all;display:flex;align-items:center;justify-content:center;text-align:center;
+  box-shadow:inset -8px -10px 0 rgba(0,0,0,.08);animation:blfloat 2.6s ease-in-out infinite}
+.bl::after{content:'';position:absolute;bottom:-14px;left:50%;width:2px;height:14px;background:rgba(0,0,0,.2)}
+.bl:nth-child(2){animation-delay:.6s}.bl:nth-child(3){animation-delay:1.2s}.bl:nth-child(4){animation-delay:1.8s}
+.bl.c0{background:var(--bad)}.bl.c1{background:var(--blue)}.bl.c2{background:var(--orange)}.bl.c3{background:var(--purple)}
+.bl.pop{animation:blpop .35s forwards}
+.bl.shake{animation:blshake .4s}
+@keyframes blfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes blpop{60%{transform:scale(1.25);opacity:1}100%{transform:scale(0);opacity:0}}
+@keyframes blshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.mg-face{display:flex;flex-direction:column;align-items:center;gap:4px}
+.mg-pic{font-size:1.6rem;line-height:1}
+img.mg-pic{width:34px;height:34px;object-fit:contain}
+.mg-word{font-family:'Jua',sans-serif;font-size:1rem}
+.mg-mean{font-size:.88rem}
+.mg-q{font-size:1.5rem}
+.bl-word{display:block}
+.bl-pic{font-size:1.5rem;line-height:1;margin-bottom:2px}
+img.bl-pic{width:32px;height:32px;object-fit:contain}
+/* 반 선택 칩 */
+.cls-chip{border:2px solid var(--line);background:var(--card);border-radius:99px;padding:8px 14px;
+  font-weight:700;font-size:.85rem;cursor:pointer;color:var(--sub)}
+.cls-chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-deep)}
 #btn-t-newlist .mi{background:var(--accent-soft)}
 #btn-t-status .mi{background:var(--blue-soft)}
 #btn-t-print .mi{background:var(--purple-soft)}
@@ -467,7 +528,17 @@ body.printing #print-root{display:block}
   </form>
   <form id="f-join" class="hidden">
     <div class="field"><label>이름 (실명 — 선생님 화면에만 보여요)</label><input id="jn-name" required maxlength="12"></div>
-    <div class="field"><label>반 (예: 경신고2 — 몰라도 비워 두면 돼요)</label><input id="jn-class" maxlength="20"></div>
+    <div class="field"><label>반 — 해당하는 반을 선택하세요</label>
+      <select id="jn-class" required>
+        <option value="" disabled selected>반을 선택하세요</option>
+        <option value="유치">유치</option>
+        <option value="유년(1~3학년)">유년 (1~3학년)</option>
+        <option value="초등(4~6학년)">초등 (4~6학년)</option>
+        <option value="중등">중등</option>
+        <option value="고등">고등</option>
+        <option value="기타">기타</option>
+      </select>
+    </div>
     <div class="field"><label>이메일</label><input id="jn-email" type="email" autocomplete="email" required></div>
     <div class="field"><label>비밀번호 (6자 이상)</label><input id="jn-pw" type="password" autocomplete="new-password" minlength="6" required></div>
     <div class="field"><label>학원 가입 코드</label><input id="jn-code" required></div>
@@ -527,11 +598,14 @@ body.printing #print-root{display:block}
           <select id="home-list-sel"></select>
         </div>
         <div class="mode-grid" id="home-modes">
+          <button class="mode-btn" data-mode="flash"><span class="mi">🃏</span><b>플래시카드</b><span>카드 넘기며 외우기</span></button>
           <button class="mode-btn" data-mode="pics"><span class="mi">🖼️</span><b>그림 맞히기</b><span>단어↔그림 고르기</span></button>
-          <button class="mode-btn" data-mode="quiz"><span class="mi">✅</span><b>객관식 퀴즈</b><span>뜻·단어·예문 빈칸</span></button>
-          <button class="mode-btn" data-mode="spell"><span class="mi">✍️</span><b>스펠링 쓰기</b><span>뜻 보고 철자 입력</span></button>
-          <button class="mode-btn" data-mode="listen"><span class="mi">🎧</span><b>듣기 받아쓰기</b><span>발음 듣고 철자 입력</span></button>
-          <button class="mode-btn wide" data-mode="wrong"><span class="mi">🔁</span><div><b>오답 복습</b><span>틀린 단어만 다시</span></div><span class="badge zero" id="wrong-count">0</span></button>
+          <button class="mode-btn" data-mode="quiz"><span class="mi">✅</span><b>뜻 맞히기</b><span>알맞은 뜻 고르기</span></button>
+          <button class="mode-btn" data-mode="match"><span class="mi">🧩</span><b>짝 맞추기</b><span>카드 뒤집어 짝 찾기</span></button>
+          <button class="mode-btn" data-mode="ox"><span class="mi">⭕</span><b>OX 퀴즈</b><span>맞으면 O 틀리면 X</span></button>
+          <button class="mode-btn" data-mode="balloon"><span class="mi">🎈</span><b>풍선 팡</b><span>정답 풍선 터뜨리기</span></button>
+          <button class="mode-btn wide" data-mode="spell"><span class="mi">✏️</span><div><b>스펠링 쓰기</b><span>뜻 보고 영어로 입력 · 고학년 추천</span></div></button>
+          <button class="mode-btn wide" data-mode="wrong"><span class="mi">🔁</span><div><b>오답 복습</b><span>틀린 단어만 다시 · 포인트 없음</span></div><span class="badge zero" id="wrong-count">0</span></button>
         </div>
         <div class="empty hidden" id="home-empty"><span class="big">📭</span>아직 배포된 단어장이 없어요.<br>선생님이 단어장을 올리면 여기에 나타나요.</div>
       </div>
@@ -637,30 +711,15 @@ body.printing #print-root{display:block}
 </section>
 
 <!-- ═══════════ 모달들 ═══════════ -->
-<div class="modal-bg hidden" id="modal-qsetup">
-  <div class="modal">
-    <h3>객관식 퀴즈 설정</h3>
-    <div class="type-row"><span class="check on" data-q="wm">✓</span><label>단어 → 뜻 고르기</label></div>
-    <div class="type-row"><span class="check on" data-q="mw">✓</span><label>뜻 → 단어 고르기</label></div>
-    <div class="type-row"><span class="check on" data-q="ex">✓</span><label>예문 빈칸 채우기</label></div>
-    <div class="type-row"><span class="check" data-q="cf">✓</span><label>혼동어 고르기</label></div>
-    <div class="type-row"><span class="check" data-q="wp">✓</span><label>단어 → 그림 고르기</label></div>
-    <div class="type-row"><span class="check" data-q="pw">✓</span><label>그림 → 단어 고르기</label></div>
-    <div class="field" style="margin-top:14px"><label>문항 수</label>
-      <select id="qs-n"><option value="10">10문항</option><option value="20" selected>20문항</option><option value="0">전체</option></select>
-    </div>
-    <div class="modal-note">여러 유형을 켜면 문항마다 무작위로 섞여요. ★★★ 90% 이상 맞히면 별 3개! 콤보 5부터 XP 1.5배.</div>
-    <button class="btn" id="btn-qs-start" style="margin-top:14px">퀴즈 시작</button>
-    <button class="btn ghost" id="btn-qs-cancel" style="margin-top:8px">취소</button>
-  </div>
-</div>
-
 <div class="modal-bg hidden" id="modal-nick">
   <div class="modal center-modal">
-    <h3>랭킹에서 쓸 닉네임 뽑기</h3>
+    <h3 id="nk-title">랭킹에서 쓸 닉네임 정하기</h3>
     <div class="nick-emoji" id="nk-emoji">🦊</div>
     <div class="nick-name" id="nk-name">…</div>
     <button class="btn ghost" id="btn-nk-again">🎲 다시 뽑기</button>
+    <div class="field" style="margin-top:12px;text-align:left"><label>아니면 직접 지어도 좋아요 (10글자까지)</label>
+      <input id="nk-input" maxlength="10" placeholder="예: 단어왕하민" autocomplete="off"></div>
+    <div class="sub" id="nk-cost" style="margin-top:8px"></div>
     <button class="btn" id="btn-nk-ok" style="margin-top:8px">이걸로 확정</button>
     <div class="modal-note">실명 대신 이 닉네임이 랭킹에 표시돼요. 마음에 들 때까지 다시 뽑을 수 있어요. <b>한 번 확정하면 바꿀 수 없어요!</b></div>
   </div>
@@ -680,7 +739,7 @@ body.printing #print-root{display:block}
     <button class="close-x" id="btn-ed-x">✕</button>
     <h3 id="ed-title-h">＋ 새 단어 리스트 만들기</h3>
     <div class="field"><label>리스트 이름</label><input id="ed-title" placeholder="예: 수특 라이트 U3 어휘"></div>
-    <div class="field"><label>대상 반 — 비우면 전체 배포. 여러 반은 쉼표로 (예: 경신고2, 동문고2)</label><input id="ed-classes"></div>
+    <div class="field"><label>대상 반 — 아무것도 안 고르면 전체 배포</label><div id="ed-classes-wrap" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px"></div></div>
     <div class="field"><label>단어 데이터 (엑셀에서 복사해 붙여넣기)</label><textarea id="ed-data" placeholder="어휘	의미	예문	해석&#10;contradiction	명 모순; 반박	There is a clear contradiction …	~에는 분명한 모순이 있다."></textarea></div>
     <div class="row" style="gap:8px;flex-wrap:wrap">
       <button class="mini-btn" id="btn-ed-help">입력 형식 안내</button>
@@ -844,18 +903,48 @@ function fmtDate(ts){
   return (d.getMonth()+1) + '/' + d.getDate() + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
 }
 
-/* ─── 발음 (TTS) ─── */
+/* ─── 발음 (TTS) — 기기 음성 우선, 안 되면 온라인 발음으로 자동 전환 ─── */
 let voices = [];
-function loadVoices(){ voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en')); }
+function loadVoices(){
+  try{ voices = speechSynthesis.getVoices().filter(v => v.lang && v.lang.toLowerCase().startsWith('en')); }catch(e){}
+}
 if ('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+let ttsUseAudio = !('speechSynthesis' in window);
+const ttsCache = {};
+let ttsHintShown = false;
+function speakAudio(text, rate){
+  const slow = (rate || 1) < 0.8;
+  const key = String(text).toLowerCase() + (slow ? '|s' : '');
+  let a = ttsCache[key];
+  if (!a){
+    a = new Audio('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q=' +
+      encodeURIComponent(text) + (slow ? '&ttsspeed=0.3' : ''));
+    ttsCache[key] = a;
+  }
+  try{ a.currentTime = 0; }catch(e){}
+  a.play().catch(() => {
+    if (!ttsHintShown){ ttsHintShown = true; toast('🔊 버튼을 누르면 발음이 나와요'); }
+  });
+}
 function speak(text, rate){
-  if (!('speechSynthesis' in window)){ toast('이 기기에서는 음성을 지원하지 않아요'); return; }
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'en-US'; u.rate = rate || 0.95;
-  const v = voices.find(x => x.lang === 'en-US') || voices[0];
-  if (v) u.voice = v;
-  speechSynthesis.speak(u);
+  if (ttsUseAudio){ speakAudio(text, rate); return; }
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = rate || 0.95;
+    const v = voices.find(x => x.lang === 'en-US') || voices[0];
+    if (v) u.voice = v;
+    let started = false;
+    u.onstart = () => { started = true; };
+    speechSynthesis.speak(u);
+    setTimeout(() => {
+      if (!started && !speechSynthesis.speaking){
+        ttsUseAudio = true;
+        try{ speechSynthesis.cancel(); }catch(e){}
+        speakAudio(text, rate);
+      }
+    }, 1200);
+  }catch(e){ ttsUseAudio = true; speakAudio(text, rate); }
 }
 
 /* ─── 효과음 ─── */
@@ -967,6 +1056,7 @@ function charReact(good){
 }
 
 /* ─── 닉네임 재료 ─── */
+const CLASSES = ['유치', '유년(1~3학년)', '초등(4~6학년)', '중등', '고등', '기타'];
 const NK_ADJ = ['날쌘','용감한','조용한','반짝이는','성실한','재빠른','느긋한','씩씩한','슬기로운','다정한','단단한','명랑한','새침한','호기심 많은','끈질긴','시원한','포근한','당당한'];
 const NK_ANI = ['여우','수달','고슴도치','펭귄','참새','다람쥐','북극곰','고래','부엉이','치타','판다','알파카','돌고래','너구리','두더지','물개','올빼미','사막여우'];
 const NK_EMO = ['🦊','🦦','🦔','🐧','🐦','🐿️','🐻‍❄️','🐳','🦉','🐆','🐼','🦙','🐬','🦝','🐹','🦭','🦉','🦊'];
@@ -1000,6 +1090,7 @@ async function doJoin(ev){
   const name = $('jn-name').value.trim(), email = $('jn-email').value.trim();
   const pw = $('jn-pw').value, code = $('jn-code').value.trim(), cls = $('jn-class').value.trim();
   if (!name){ $('auth-msg').textContent = '이름을 입력해 주세요.'; return; }
+  if (!cls){ $('auth-msg').textContent = '반을 선택해 주세요.'; return; }
   $('btn-join').disabled = true;
   state.joining = true;
   try{
@@ -1232,22 +1323,46 @@ function renderMe(){
   else $('me-emoji').textContent = u.nicknameLocked ? u.emoji : '🙂';
   $('me-nick').textContent = u.nicknameLocked ? u.nickname : '닉네임 미정';
   $('me-name-line').textContent = u.name + (u.class ? ' · ' + u.class : '') + ' · ' + (u.role === 'teacher' ? '선생님' : '학생');
-  $('btn-nick').classList.toggle('hidden', !!u.nicknameLocked);
+  $('btn-nick').classList.remove('hidden');
+  $('btn-nick').textContent = u.nicknameLocked ? '✏️ 닉네임 바꾸기 · 500 XP' : '🎲 닉네임 정하기';
 }
 let nickDraft = null;
+const NICK_COST = 500;
+function nickIsChange(){ return !!state.user.nicknameLocked; }
 function openNick(){
   nickDraft = drawNick();
   $('nk-emoji').textContent = nickDraft.emoji;
   $('nk-name').textContent = nickDraft.name;
+  $('nk-input').value = '';
+  const change = nickIsChange();
+  $('nk-title').textContent = change ? '닉네임 바꾸기' : '랭킹에서 쓸 닉네임 정하기';
+  $('nk-cost').textContent = change
+    ? '닉네임 변경에는 ' + NICK_COST + ' XP가 들어요 (지금 ' + (state.user.xp || 0) + ' XP)'
+    : '처음 정하는 닉네임은 무료예요!';
   show('modal-nick');
 }
 async function confirmNick(){
   if (!nickDraft) return;
+  const typed = $('nk-input').value.trim();
+  const name = typed || nickDraft.name;
+  if (typed && typed.length < 2){ toast('닉네임은 2글자 이상이어야 해요'); return; }
+  const change = nickIsChange();
+  if (change){
+    if ((state.user.xp || 0) < NICK_COST){ toast('XP가 부족해요. ' + NICK_COST + ' XP가 필요해요'); return; }
+    if (name === state.user.nickname){ toast('지금 닉네임과 같아요'); return; }
+    if (!confirm('닉네임을 「' + name + '」(으)로 바꿀까요? ' + NICK_COST + ' XP가 차감돼요.')) return;
+  }
   try{
-    await updateDoc(doc(db, 'users', state.uid), { nickname: nickDraft.name, emoji: nickDraft.emoji, nicknameLocked: true });
-    state.user.nickname = nickDraft.name; state.user.emoji = nickDraft.emoji; state.user.nicknameLocked = true;
+    const upd = { nickname: name, emoji: nickDraft.emoji, nicknameLocked: true };
+    if (change){
+      state.user.xp = (state.user.xp || 0) - NICK_COST;
+      upd.xp = state.user.xp;
+    }
+    await updateDoc(doc(db, 'users', state.uid), upd);
+    state.user.nickname = name; state.user.emoji = nickDraft.emoji; state.user.nicknameLocked = true;
     await syncRank();
-    hide('modal-nick'); renderMe(); toast('닉네임 확정! 랭킹에 표시돼요');
+    hide('modal-nick'); renderMe(); renderHome();
+    toast(change ? '닉네임 변경 완료! (−' + NICK_COST + ' XP)' : '닉네임 확정! 랭킹에 표시돼요');
   }catch(e){ toast('저장에 실패했어요'); }
 }
 async function syncRank(){
@@ -1390,7 +1505,8 @@ function openStudy(title){
 function closeStudy(){
   $('study').classList.add('hidden');
   document.body.style.overflow = '';
-  speechSynthesis && speechSynthesis.cancel();
+  if ('speechSynthesis' in window){ try{ speechSynthesis.cancel(); }catch(e){} }
+  Object.values(ttsCache).forEach(a => { try{ a.pause(); }catch(e){} });
   state.session = null;
 }
 function setProg(i, n){
@@ -1432,19 +1548,23 @@ function detailHtml(w){
 /* ─── 결과 화면 ─── */
 function showResult(retryFn){
   const s = state.session;
-  s.coins = (s.coins || 0) + 5;
+  const isReview = s.mode === 'review';
+  if (!isReview) s.coins = (s.coins || 0) + 5;
   const pct = s.total ? s.correct / s.total : 0;
   const stars = pct >= 0.9 ? '★★★' : pct >= 0.7 ? '★★☆' : pct >= 0.5 ? '★☆☆' : '☆☆☆';
   const wrongHtml = s.wrong.length
     ? '<div class="wrong-list"><h4>틀린 단어 ' + s.wrong.length + '개 — 오답 복습에 저장돼요</h4>' +
       s.wrong.map(w => '<div class="wrong-item"><b>' + esc(w.word) + '</b><span>' + esc(w.meaning) + '</span></div>').join('') + '</div>'
     : '<div class="sub" style="margin-bottom:20px">전부 맞혔어요! 완벽해요 👏</div>';
+  const gainHtml = isReview
+    ? '<div class="xp-gain" style="color:var(--sub)">복습 완료! 복습은 포인트가 없어요 📖</div>'
+    : '<div class="xp-gain">＋' + s.xp + ' XP · ＋' + s.coins + ' 🪙</div>';
   $('study-body').innerHTML =
     '<div class="result">' +
     '<div class="result-char">' + charFace('rcv') + '</div>' +
     '<div class="stars" style="color:var(--gold)">' + stars + '</div>' +
     '<div class="score">' + s.correct + ' <small>/ ' + s.total + '</small></div>' +
-    '<div class="xp-gain">＋' + s.xp + ' XP · ＋' + s.coins + ' 🪙</div>' + wrongHtml +
+    gainHtml + wrongHtml +
     '<div class="result-btns"><button class="btn ghost" id="btn-r-again">한 번 더</button>' +
     '<button class="btn" id="btn-r-done">완료</button></div></div>';
   $('btn-r-done').onclick = closeStudy;
@@ -1464,7 +1584,7 @@ function startFlash(entries, isReview){
   const cleared = [];
   function card(i){
     if (i >= words.length){
-      s.xp += 10;
+      if (!isReview) s.xp += 10;
       if (isReview && cleared.length) clearWrong(cleared);
       showResult(() => startFlash(entries, isReview));
       return;
@@ -1489,7 +1609,9 @@ function startFlash(entries, isReview){
     fc.onclick = e => { if (e.target.id !== 'fc-say') fc.classList.toggle('flip'); };
     $('fc-say').onclick = e => { e.stopPropagation(); speak(w.word); };
     $('fc-yes').onclick = () => {
-      s.correct += 1; s.xp += 2; s.coins += 1; s.combo += 1;
+      s.correct += 1;
+      if (!isReview){ s.xp += 2; s.coins += 1; }
+      s.combo += 1;
       if (isReview) cleared.push(w.word);
       beep(true); card(i + 1);
     };
@@ -1585,9 +1707,9 @@ function startQuiz(entries, types, n, isReview){
   const cleared = [];
   function ask(i){
     if (i >= qs.length){
-      s.xp += 10;
+      if (!isReview) s.xp += 10;
       if (isReview && cleared.length) clearWrong(cleared);
-      showResult(() => { openStudy(isReview ? '오답 복습 · 퀴즈' : '객관식 퀴즈'); startQuiz(entries, types, n, isReview); });
+      showResult(() => { openStudy(isReview ? '오답 복습 · 퀴즈' : '뜻 맞히기 퀴즈'); startQuiz(entries, types, n, isReview); });
       return;
     }
     setProg(i + 1, qs.length);
@@ -1614,7 +1736,7 @@ function startQuiz(entries, types, n, isReview){
           b.disabled = true;
           if (q.opts[+b.dataset.i] === q.ans) b.classList.add('correct');
         });
-        if (ok){ s.correct += 1; s.coins += 1; addXp(10); if (isReview) cleared.push(q.w.word); }
+        if (ok){ s.correct += 1; if (!isReview){ s.coins += 1; addXp(10); } else { s.combo += 1; cleared.push(q.w.word); } }
         else { btn.classList.add('wrongpick'); s.combo = 0; if (!isReview) s.wrong.push(q.w); }
         beep(ok);
         setTimeout(() => ask(i + 1), ok ? 650 : 1400);
@@ -1624,71 +1746,271 @@ function startQuiz(entries, types, n, isReview){
   ask(0);
 }
 
-/* ─── ③ 스펠링 / ④ 듣기 받아쓰기 ─── */
-function startTyping(entries, listenMode, isReview){
-  const words = shuffle(entries.filter(w => w.word));
-  if (!words.length){ toast('학습할 단어가 없어요'); return; }
-  openStudy(listenMode ? '듣기 받아쓰기' : (isReview ? '오답 복습 · 스펠링' : '스펠링 쓰기'));
+/* ─── ③ 짝 맞추기 (메모리 게임) ─── */
+function startMatch(entries){
+  const pool = shuffle(entries.filter(w => w.word && w.meaning));
+  if (pool.length < 3){ toast('단어가 3개 이상 필요해요'); return; }
+  const pairs = pool.slice(0, Math.min(6, pool.length));
+  openStudy('짝 맞추기');
   const s = state.session;
-  s.mode = isReview ? 'review' : (listenMode ? 'listen' : 'spell');
-  s.total = words.length;
-  const cleared = [];
+  s.mode = 'match';
+  s.total = pairs.length;
+  const cards = shuffle([
+    ...pairs.map((w, k) => ({ k, face: w.pic ? picHtml(w.pic, 'mg-pic') + '<span class="mg-word">' + esc(w.word) + '</span>' : '<span class="mg-word">' + esc(w.word) + '</span>', say: w.word })),
+    ...pairs.map((w, k) => ({ k, face: '<span class="mg-mean">' + esc(w.meaning) + '</span>', say: '' })),
+  ]);
+  let matched = 0, first = null, lock = false;
+  setProg(0, pairs.length);
+  $('study-body').innerHTML =
+    '<div class="sub" style="text-align:center;margin-bottom:12px">카드 두 장을 뒤집어 단어와 뜻의 짝을 찾아요!</div>' +
+    '<div class="mg-grid">' + cards.map((c, idx) =>
+      '<button class="mg-card back" data-idx="' + idx + '"><span class="mg-q">❓</span><span class="mg-face hidden">' + c.face + '</span></button>'
+    ).join('') + '</div>';
+  document.querySelectorAll('.mg-card').forEach(btn => {
+    btn.onclick = () => {
+      if (lock || btn.classList.contains('done') || btn === (first && first.btn)) return;
+      const c = cards[+btn.dataset.idx];
+      btn.classList.remove('back');
+      btn.querySelector('.mg-q').classList.add('hidden');
+      btn.querySelector('.mg-face').classList.remove('hidden');
+      if (c.say) speak(c.say);
+      if (!first){ first = { btn, c }; return; }
+      lock = true;
+      if (first.c.k === c.k){
+        const a = first.btn, b = btn;
+        setTimeout(() => {
+          a.classList.add('done'); b.classList.add('done');
+          matched += 1; s.correct += 1; s.coins += 1; addXp(8);
+          beep(true);
+          setProg(matched, pairs.length);
+          first = null; lock = false;
+          if (matched === pairs.length){
+            s.xp += 10;
+            showResult(() => startMatch(entries));
+          }
+        }, 350);
+      } else {
+        s.combo = 0;
+        beep(false);
+        const a = first.btn, b = btn;
+        setTimeout(() => {
+          [a, b].forEach(x => {
+            x.classList.add('back');
+            x.querySelector('.mg-q').classList.remove('hidden');
+            x.querySelector('.mg-face').classList.add('hidden');
+          });
+          first = null; lock = false;
+        }, 900);
+      }
+    };
+  });
+}
+
+/* ─── ④ OX 퀴즈 ─── */
+function startOX(entries){
+  const pool = shuffle(entries.filter(w => w.word && w.meaning));
+  if (pool.length < 2){ toast('단어가 2개 이상 필요해요'); return; }
+  const qs = shuffle(pool).slice(0, Math.min(10, pool.length)).map(w => {
+    const isTrue = Math.random() < 0.5 || pool.length < 3;
+    let mean = w.meaning;
+    if (!isTrue){
+      const other = shuffle(pool.filter(x => x.word !== w.word && x.meaning !== w.meaning))[0];
+      if (other) mean = other.meaning;
+    }
+    return { w, mean, ans: mean === w.meaning };
+  });
+  openStudy('OX 퀴즈');
+  const s = state.session;
+  s.mode = 'ox';
+  s.total = qs.length;
   function ask(i){
-    if (i >= words.length){
+    if (i >= qs.length){
       s.xp += 10;
-      if (isReview && cleared.length) clearWrong(cleared);
-      showResult(() => startTyping(entries, listenMode, isReview));
+      showResult(() => startOX(entries));
       return;
     }
-    setProg(i + 1, words.length);
-    const w = words[i];
+    setProg(i + 1, qs.length);
+    const q = qs[i];
+    $('study-body').innerHTML =
+      '<div class="ox-pair">' +
+      (q.w.pic ? '<div class="q-pic">' + picHtml(q.w.pic, 'q-pic-big') + '</div>' : '') +
+      '<div class="ox-word">' + esc(q.w.word) + '</div>' +
+      '<button class="speak-btn" id="ox-say">🔊</button>' +
+      '<div class="ox-mean">' + esc(q.mean) + '</div>' +
+      '<div class="sub" style="margin-top:8px">단어와 뜻이 맞으면 O, 틀리면 X!</div></div>' +
+      '<div class="ox-btns"><button class="ox-btn o" id="ox-o">⭕</button>' +
+      '<button class="ox-btn x" id="ox-x">❌</button></div>';
+    $('ox-say').onclick = () => speak(q.w.word);
+    speak(q.w.word);
+    let done = false;
+    function pick(choice){
+      if (done) return; done = true;
+      const ok = choice === q.ans;
+      const chosen = $(choice ? 'ox-o' : 'ox-x');
+      const right = $(q.ans ? 'ox-o' : 'ox-x');
+      right.classList.add('correct');
+      if (!ok) chosen.classList.add('wrongpick');
+      if (!ok || !q.ans){
+        $('study-body').insertAdjacentHTML('beforeend',
+          '<div class="q-hint" style="text-align:center;margin-top:12px">진짜 뜻: <b>' + esc(q.w.meaning) + '</b></div>');
+      }
+      if (ok){ s.correct += 1; s.coins += 1; addXp(8); }
+      else { s.combo = 0; s.wrong.push(q.w); }
+      beep(ok);
+      setTimeout(() => ask(i + 1), ok ? 700 : 1600);
+    }
+    $('ox-o').onclick = () => pick(true);
+    $('ox-x').onclick = () => pick(false);
+  }
+  ask(0);
+}
+
+/* ─── ⑤ 풍선 팡 ─── */
+function startBalloon(entries){
+  const pool = shuffle(entries.filter(w => w.word && w.meaning));
+  if (pool.length < 4){ toast('단어가 4개 이상 필요해요'); return; }
+  const qs = shuffle(pool).slice(0, Math.min(10, pool.length));
+  openStudy('풍선 팡');
+  const s = state.session;
+  s.mode = 'balloon';
+  s.total = qs.length;
+  function ask(i){
+    if (i >= qs.length){
+      s.xp += 10;
+      showResult(() => startBalloon(entries));
+      return;
+    }
+    setProg(i + 1, qs.length);
+    const w = qs[i];
+    const wrongs = shuffle(pool.filter(x => x.word !== w.word)).slice(0, 3);
+    const opts = shuffle([w, ...wrongs]);
+    $('study-body').innerHTML =
+      '<div class="q-question"><span class="q-kind">풍선 팡</span>' +
+      '<div class="q-text">' + esc(w.meaning) + '</div>' +
+      '<div class="q-hint">뜻에 맞는 단어 풍선을 터뜨려요!</div>' +
+      '<button class="speak-btn" id="bl-say" style="margin-top:10px">🔊</button></div>' +
+      '<div class="bl-grid">' + opts.map((o, j) =>
+        '<button class="bl c' + (j % 4) + '" data-i="' + j + '">' +
+        (o.pic ? picHtml(o.pic, 'bl-pic') : '') +
+        '<span class="bl-word">' + esc(o.word) + '</span></button>'
+      ).join('') + '</div>';
+    $('bl-say').onclick = () => speak(w.word);
+    let done = false;
+    document.querySelectorAll('.bl').forEach(btn => {
+      btn.onclick = () => {
+        if (done) return;
+        const pickw = opts[+btn.dataset.i];
+        const ok = pickw.word === w.word;
+        if (ok){
+          done = true;
+          btn.classList.add('pop');
+          s.correct += 1; s.coins += 1; addXp(10);
+          beep(true); speak(w.word);
+          setTimeout(() => ask(i + 1), 750);
+        } else {
+          btn.classList.add('shake');
+          btn.disabled = true;
+          s.combo = 0;
+          if (!s.wrong.some(x => x.word === w.word)) s.wrong.push(w);
+          beep(false);
+          setTimeout(() => btn.classList.remove('shake'), 500);
+        }
+      };
+    });
+  }
+  ask(0);
+}
+
+/* ─── ⑥ 스펠링 쓰기 (고학년) ─── */
+function startSpell(entries){
+  const pool = shuffle(entries.filter(w => w.word && w.meaning));
+  if (!pool.length){ toast('학습할 단어가 없어요'); return; }
+  const qs = pool.slice(0, Math.min(10, pool.length));
+  openStudy('스펠링 쓰기');
+  const s = state.session;
+  s.mode = 'spell';
+  s.total = qs.length;
+  function ask(i){
+    if (i >= qs.length){
+      s.xp += 10;
+      showResult(() => startSpell(entries));
+      return;
+    }
+    setProg(i + 1, qs.length);
+    const w = qs[i];
+    const ans = w.word.trim();
     const chips =
       (w.syn ? '<span class="chip syn">≒ ' + esc(w.syn) + '</span>' : '') +
       (w.ant ? '<span class="chip ant">↔ ' + esc(w.ant) + '</span>' : '');
-    const head = listenMode
-      ? '<button class="listen-big" id="sp-play">🔊</button>' +
-        '<div class="sub">발음을 듣고 단어를 입력하세요</div>' +
-        '<div class="mini-actions" style="margin-top:10px">' +
-        '<button class="mini-btn" id="sp-slow">🐢 천천히 듣기</button>' +
-        '<button class="mini-btn" id="sp-meanhint">💡 뜻 힌트</button></div>' +
-        '<div class="q-hint hidden" id="sp-meanline">' + esc(w.meaning) + '</div>'
-      : '<div class="sp-mean">' + esc(w.meaning) + '</div>' +
-        (chips ? '<div class="sp-chips">' + chips + '</div>' : '') +
-        '<div class="mini-actions" style="margin-top:12px">' +
-        '<button class="mini-btn" id="sp-hint">첫 글자 힌트 (' + w.word.length + '글자)</button></div>';
+    let hintUsed = 0;
+    function slotsHtml(val){
+      const typed = val.replace(/\s+/g, '');
+      let t = 0;
+      return [...ans].map(ch => {
+        if (ch === ' ') return '<span class="sp-slot gap"></span>';
+        const c = typed[t] || ''; t += 1;
+        return '<span class="sp-slot' + (c ? ' fill' : '') + '">' + esc(c) + '</span>';
+      }).join('');
+    }
     $('study-body').innerHTML =
-      '<div class="sp-box">' + head + '</div>' +
+      '<div class="sp-box">' +
+      (w.pic ? '<div class="fc-pic">' + picHtml(w.pic, 'fc-pic-big') + '</div>' : '') +
+      '<div class="sp-mean">' + esc(w.meaning) + '</div>' +
+      (chips ? '<div class="sp-chips">' + chips + '</div>' : '') +
+      '<div class="sp-slots" id="sp-slots">' + slotsHtml('') + '</div>' +
+      '<div class="mini-actions" style="margin-top:10px">' +
+      '<button class="mini-btn" id="sp-listen">🔊 발음 듣기</button>' +
+      '<button class="mini-btn" id="sp-hint">💡 글자 힌트</button></div></div>' +
       '<input class="sp-input" id="sp-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="영어 단어 입력" inputmode="latin">' +
       '<div class="sp-feedback" id="sp-fb"></div>' +
       '<button class="btn" id="sp-check">확인</button>';
     const input = $('sp-in');
-    if (listenMode){
-      $('sp-play').onclick = () => speak(w.word, 0.95);
-      $('sp-slow').onclick = () => speak(w.word, 0.6);
-      $('sp-meanhint').onclick = () => $('sp-meanline').classList.remove('hidden');
-      speak(w.word, 0.95);
-    } else {
-      $('sp-hint').onclick = () => { input.value = w.word[0]; input.focus(); };
-    }
+    input.oninput = () => { $('sp-slots').innerHTML = slotsHtml(input.value.trim()); };
+    $('sp-listen').onclick = () => speak(ans);
+    $('sp-hint').onclick = () => {
+      const typed = input.value.trim();
+      const target = ans.replace(/\s+/g, '');
+      let k = 0;
+      while (k < typed.replace(/\s+/g, '').length && k < target.length &&
+        typed.replace(/\s+/g, '')[k].toLowerCase() === target[k].toLowerCase()) k += 1;
+      if (k >= target.length) return;
+      hintUsed += 1;
+      let rebuilt = '', t = 0;
+      for (const ch of ans){
+        if (ch === ' '){ rebuilt += ' '; continue; }
+        if (t <= k) rebuilt += target[t];
+        t += 1;
+        if (t > k) break;
+      }
+      input.value = rebuilt;
+      input.focus();
+      $('sp-slots').innerHTML = slotsHtml(input.value.trim());
+    };
     setTimeout(() => input.focus(), 60);
     let done = false;
     function check(){
       if (done) return;
-      const val = input.value.trim().toLowerCase();
+      const val = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
       if (!val) return;
       done = true;
-      const ok = val === w.word.trim().toLowerCase();
+      const ok = val === ans.toLowerCase().replace(/\s+/g, ' ');
       input.classList.add(ok ? 'ok' : 'no');
       input.disabled = true;
       const fb = $('sp-fb');
       fb.className = 'sp-feedback ' + (ok ? 'ok' : 'no');
-      fb.innerHTML = ok ? '정답! ' + esc(w.word)
-        : '정답: <b>' + esc(w.word) + '</b> — ' + esc(w.meaning);
-      if (ok){ s.correct += 1; s.coins += 1; addXp(10); if (isReview) cleared.push(w.word); }
-      else { s.combo = 0; if (!isReview) s.wrong.push(w); }
+      fb.innerHTML = ok
+        ? '정답! ' + esc(ans) + (hintUsed ? ' (힌트 ' + hintUsed + '번)' : '')
+        : '정답: <b>' + esc(ans) + '</b> — ' + esc(w.meaning);
+      if (ok){
+        s.correct += 1; s.coins += 1;
+        addXp(hintUsed ? 6 : 12);
+      } else {
+        s.combo = 0;
+        s.wrong.push(w);
+      }
       beep(ok);
-      if (!listenMode) speak(w.word);
-      setTimeout(() => ask(i + 1), ok ? 800 : 1900);
+      speak(ans);
+      setTimeout(() => ask(i + 1), ok ? 900 : 2000);
     }
     $('sp-check').onclick = check;
     input.onkeydown = e => { if (e.key === 'Enter') check(); };
@@ -1707,14 +2029,20 @@ function launchMode(mode){
   const list = curList();
   if (!list || !(list.words || []).length){ toast('먼저 단어장을 골라 주세요'); return; }
   const words = list.words;
-  if (mode === 'pics'){
+  if (mode === 'flash') startFlash(words, false);
+  else if (mode === 'pics'){
     if (words.filter(w => w.pic).length < 4){ toast('그림(이모지)이 있는 단어가 4개 이상 필요해요'); return; }
     openStudy('그림 맞히기');
     startQuiz(words, { wp: true, pw: true }, 10, false);
   }
-  else if (mode === 'spell') startTyping(words, false, false);
-  else if (mode === 'listen') startTyping(words, true, false);
-  else if (mode === 'quiz') show('modal-qsetup');
+  else if (mode === 'quiz'){
+    openStudy('뜻 맞히기 퀴즈');
+    startQuiz(words, { wm: true, mw: true, wp: true, pw: true }, 10, false);
+  }
+  else if (mode === 'match') startMatch(words);
+  else if (mode === 'ox') startOX(words);
+  else if (mode === 'balloon') startBalloon(words);
+  else if (mode === 'spell') startSpell(words);
 }
 
 /* ════════════════ 선생님 도구 ════════════════ */
@@ -1758,7 +2086,12 @@ function openEditor(id){
   const l = id ? state.allLists.find(x => x.id === id) : null;
   $('ed-title-h').textContent = l ? '단어 리스트 수정' : '＋ 새 단어 리스트 만들기';
   $('ed-title').value = l ? l.title : '';
-  $('ed-classes').value = l && l.classes ? l.classes.join(', ') : '';
+  const chosen = l && l.classes ? l.classes : [];
+  const all = [...CLASSES];
+  chosen.forEach(c => { if (!all.includes(c)) all.push(c); });
+  $('ed-classes-wrap').innerHTML = all.map(c =>
+    '<button type="button" class="cls-chip' + (chosen.includes(c) ? ' on' : '') + '" data-cls="' + esc(c) + '">' + esc(c) + '</button>').join('');
+  $('ed-classes-wrap').querySelectorAll('.cls-chip').forEach(ch => ch.onclick = () => ch.classList.toggle('on'));
   $('ed-data').value = l ? wordsToTsv(l.words || []) : '';
   $('ed-preview').textContent = l ? (l.words || []).length + '단어 읽힘' : '';
   $('btn-ed-delete').classList.toggle('hidden', !l);
@@ -1777,7 +2110,7 @@ async function saveList(){
   if (!title){ toast('리스트 이름을 입력하세요'); return; }
   const words = parseWords($('ed-data').value);
   if (!words.length){ toast('읽을 수 있는 단어가 없어요. 형식을 확인하세요'); return; }
-  const classes = $('ed-classes').value.split(',').map(s => s.trim()).filter(Boolean);
+  const classes = [...$('ed-classes-wrap').querySelectorAll('.cls-chip.on')].map(ch => ch.dataset.cls);
   $('btn-ed-save').disabled = true;
   try{
     if (edId){
@@ -1849,7 +2182,7 @@ async function openStudent(uid, u){
   $('sd-title').textContent = u.name + ' · ' + (u.class || '반 미지정');
   $('sd-body').innerHTML = '<div class="empty">불러오는 중…</div>';
   try{
-    const MODE_KO = { flash: '플래시카드', quiz: '객관식 퀴즈', spell: '스펠링', listen: '듣기', review: '오답 복습' };
+    const MODE_KO = { flash: '플래시카드', pics: '그림 맞히기', quiz: '뜻 맞히기', match: '짝 맞추기', ox: 'OX 퀴즈', balloon: '풍선 팡', spell: '스펠링', listen: '듣기', review: '오답 복습' };
     const ss = await getDocs(query(collection(db, 'users', uid, 'sessions'), orderBy('ts', 'desc'), limit(15)));
     const sess = [];
     ss.forEach(d => sess.push(d.data()));
@@ -1885,14 +2218,20 @@ async function openAcct(){
     snap.forEach(d => users.push({ uid: d.id, ...d.data() }));
     users.sort((a, b) => (a.role === 'teacher' ? -1 : 1) - (b.role === 'teacher' ? -1 : 1) || String(a.name).localeCompare(b.name, 'ko'));
     $('ac-body').innerHTML = users.map(u =>
-      '<div class="setting-row"><div class="st-t" style="flex:1;min-width:0"><b>' + esc(u.name) +
+      '<div class="setting-row" style="flex-wrap:wrap"><div class="st-t" style="flex:1;min-width:0"><b>' + esc(u.name) +
       (u.blocked ? ' <span class="acc-pill acc-lo">차단됨</span>' : '') + '</b>' +
       '<span>' + esc(u.email) + (u.class ? ' · ' + esc(u.class) : '') + '</span></div>' +
       '<select class="mini" data-role="' + u.uid + '"' + (u.uid === state.uid ? ' disabled' : '') + '>' +
       '<option value="student"' + (u.role !== 'teacher' ? ' selected' : '') + '>학생</option>' +
       '<option value="teacher"' + (u.role === 'teacher' ? ' selected' : '') + '>선생님</option></select>' +
       '<button class="mini-btn" data-block="' + u.uid + '"' + (u.uid === state.uid ? ' disabled' : '') + '>' +
-      (u.blocked ? '해제' : '차단') + '</button></div>').join('');
+      (u.blocked ? '해제' : '차단') + '</button>' +
+      (u.uid !== state.uid
+        ? '<div style="flex-basis:100%;display:flex;gap:6px;margin-top:6px">' +
+          '<button class="mini-btn" data-rp="' + u.uid + '">🪙 포인트 초기화</button>' +
+          '<button class="mini-btn" data-rr="' + u.uid + '">📊 기록 초기화</button></div>'
+        : '') +
+      '</div>').join('');
     $('ac-body').querySelectorAll('[data-role]').forEach(sel => sel.onchange = async () => {
       try{ await updateDoc(doc(db, 'users', sel.dataset.role), { role: sel.value }); toast('역할 변경 완료'); }
       catch(e){ toast('변경 실패'); }
@@ -1903,6 +2242,31 @@ async function openAcct(){
         await updateDoc(doc(db, 'users', target.uid), { blocked: !target.blocked });
         toast(target.blocked ? '차단 해제' : '차단 완료'); openAcct();
       }catch(e){ toast('변경 실패'); }
+    });
+    $('ac-body').querySelectorAll('[data-rp]').forEach(b => b.onclick = async () => {
+      const target = users.find(x => x.uid === b.dataset.rp);
+      if (!confirm(target.name + ' 학생의 XP·코인·레벨을 모두 0으로 되돌릴까요? 되돌릴 수 없어요.')) return;
+      try{
+        await updateDoc(doc(db, 'users', target.uid), { xp: 0, coins: 0, todayXp: 0, todayWords: 0, weekXp: 0 });
+        await setDoc(doc(db, 'rank', target.uid), { xp: 0, weekXp: 0, level: 1 }, { merge: true });
+        toast('포인트 초기화 완료');
+      }catch(e){ toast('초기화 실패'); }
+    });
+    $('ac-body').querySelectorAll('[data-rr]').forEach(b => b.onclick = async () => {
+      const target = users.find(x => x.uid === b.dataset.rr);
+      if (!confirm(target.name + ' 학생의 학습 기록(세션·오답·정답률)을 모두 지울까요? 되돌릴 수 없어요.')) return;
+      b.disabled = true; b.textContent = '삭제 중…';
+      try{
+        await updateDoc(doc(db, 'users', target.uid), {
+          'stats.correct': 0, 'stats.total': 0, 'stats.sessions': 0,
+        });
+        for (const sub of ['sessions', 'progress']){
+          const ss = await getDocs(collection(db, 'users', target.uid, sub));
+          for (const d of ss.docs) await deleteDoc(d.ref);
+        }
+        toast('기록 초기화 완료');
+      }catch(e){ toast('초기화 실패'); }
+      finally{ b.disabled = false; b.textContent = '📊 기록 초기화'; }
     });
   }catch(e){ $('ac-body').innerHTML = '<div class="empty">목록을 불러오지 못했어요.</div>'; }
 }
@@ -2051,17 +2415,6 @@ function wire(){
   document.querySelectorAll('#home-modes .mode-btn').forEach(b => b.onclick = () => launchMode(b.dataset.mode));
   /* 학습 */
   $('btn-study-close').onclick = () => { if (confirm('학습을 그만둘까요? 지금까지 결과는 저장되지 않아요.')) closeStudy(); };
-  /* 퀴즈 설정 */
-  document.querySelectorAll('#modal-qsetup .check').forEach(c => c.onclick = () => c.classList.toggle('on'));
-  $('btn-qs-cancel').onclick = () => hide('modal-qsetup');
-  $('btn-qs-start').onclick = () => {
-    const types = { wm: opt('q', 'wm'), mw: opt('q', 'mw'), ex: opt('q', 'ex'), cf: opt('q', 'cf'), wp: opt('q', 'wp'), pw: opt('q', 'pw') };
-    if (!Object.values(types).some(v => v)){ toast('유형을 하나 이상 켜 주세요'); return; }
-    hide('modal-qsetup');
-    const n = parseInt($('qs-n').value);
-    openStudy('객관식 퀴즈');
-    startQuiz(curList().words, types, n || 0, false);
-  };
   /* 닉네임 */
   $('btn-nick').onclick = openNick;
   $('btn-nk-again').onclick = () => { nickDraft = drawNick(); $('nk-emoji').textContent = nickDraft.emoji; $('nk-name').textContent = nickDraft.name; };
