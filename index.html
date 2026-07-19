@@ -2250,7 +2250,10 @@ async function openAcct(){
         await updateDoc(doc(db, 'users', target.uid), { xp: 0, coins: 0, todayXp: 0, todayWords: 0, weekXp: 0 });
         await setDoc(doc(db, 'rank', target.uid), { xp: 0, weekXp: 0, level: 1 }, { merge: true });
         toast('포인트 초기화 완료');
-      }catch(e){ toast('초기화 실패'); }
+      }catch(e){
+        console.warn(e);
+        toast(e.code === 'permission-denied' ? '권한 오류 — Firestore 보안 규칙을 갱신해야 해요' : '초기화 실패: ' + (e.code || e.message));
+      }
     });
     $('ac-body').querySelectorAll('[data-rr]').forEach(b => b.onclick = async () => {
       const target = users.find(x => x.uid === b.dataset.rr);
@@ -2265,7 +2268,10 @@ async function openAcct(){
           for (const d of ss.docs) await deleteDoc(d.ref);
         }
         toast('기록 초기화 완료');
-      }catch(e){ toast('초기화 실패'); }
+      }catch(e){
+        console.warn(e);
+        toast(e.code === 'permission-denied' ? '권한 오류 — Firestore 보안 규칙을 갱신해야 해요' : '초기화 실패: ' + (e.code || e.message));
+      }
       finally{ b.disabled = false; b.textContent = '📊 기록 초기화'; }
     });
   }catch(e){ $('ac-body').innerHTML = '<div class="empty">목록을 불러오지 못했어요.</div>'; }
